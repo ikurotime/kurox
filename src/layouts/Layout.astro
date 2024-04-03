@@ -42,7 +42,7 @@ if (access_token && refresh_token) {
 ---
 
 <!doctype html>
-<html lang='en'>
+<html class="dark" lang='en'>
   <head>
     <meta charset='UTF-8' />
     <meta name='description' content='Astro description' />
@@ -51,7 +51,7 @@ if (access_token && refresh_token) {
     <meta name='generator' content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class='flex flex-col min-h-screen font-roboto'>
+  <body class='flex bg-stone-800 flex-col min-h-screen font-roboto'>
     <Navbar {user} />
     <div class='flex mx-auto flex-1 flex-col gap-y-4 py-8 w-full max-w-[840px]'>
       <slot />
@@ -71,7 +71,6 @@ if (access_token && refresh_token) {
     );
   }
   html {
-    background: #f7f7f5;
     background-size: 224px;
   }
   code {

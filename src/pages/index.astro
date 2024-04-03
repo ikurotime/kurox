@@ -1,14 +1,33 @@
 ---
 import Post from '@/components/Post.astro'
-import { supabase } from '@/lib/supabase'
 import Input from '../components/Input.astro'
 import Layout from '../layouts/Layout.astro'
+import { supabase } from "@/lib/supabase";
 
-const posts = await supabase.from('post').select('*')
-console.log(posts)
+let posts;
+async function fetchPosts(){
+ return await supabase.from('post').select('*, users(*)').order('created_at', { ascending: false })
+}
+
+posts = await fetchPosts()
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const title  = data.get("post")?.toString() || "";
+    console.log(title)
+    await supabase.from('post')
+    .insert({ title:"test",description: title, user_id: 2})
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
 ---
 
 <Layout title='Welcome to Astro.'>
-  <Input  />
-  <Post />
+<Input  />
+{posts?.data?.map((post) => (
+<Post {post} />
+))}
 </Layout>
